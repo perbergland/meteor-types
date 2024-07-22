@@ -23,10 +23,28 @@ meteor add zodern:types
     "preserveSymlinks": true,
     "paths": {
       "meteor/*": [
-        "node_modules/@types/meteor/*",
         ".meteor/local/types/packages.d.ts"
       ]
     }
+  }
+}
+```
+
+At the time of writing (2024-07-22), there are some Meteor core packages that don’t exist/cannot be imported. For those types, you can still import types from the DefinitelyTyped npm package by adding paths entries in tsconfig.json.
+
+```json
+{
+  "compilerOptions": {
+    "preserveSymlinks": true,
+    "paths": {
+      // Workaround for #10
+      "meteor/react-meteor-data": [
+        "./node_modules/@types/meteor/react-meteor-data.d.ts"
+      ],
+      // Workaround for https://github.com/meteor/meteor/issues/13240
+      "meteor/tools": ["./node_modules/@types/meteor/tools.d.ts"],
+      "meteor/*": ["./.meteor/local/types/packages.d.ts"]
+    },
   }
 }
 ```
